@@ -17,7 +17,7 @@ var { users } = require('../models/user');
 
 
 //for user registration
-router.post('/', async (req, res) => {
+router.post('/register', async (req, res) => {
     console.log(req.body);
 
     const {name, phoneNumber, emailId, organizationName, username, password: plainTextPassword} = req.body;
@@ -29,8 +29,8 @@ router.post('/', async (req, res) => {
         res.statusCode = 200;
         res.setHeader('Content-Type', 'application/json');
         res.json(user);
-    }, (err) => next(err))
-    .catch((err) => next(err))
+    }, (err) => console.log(err))
+    .catch((err) => console.log(err))
 });
 
 
