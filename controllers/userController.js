@@ -35,11 +35,14 @@ router.post('/', async (req, res) => {
 
 
 //for user login
-router.get('/auth', async (req,res) => {
+router.post('/auth', async (req,res) => {
     console.log("connected to login");
     const { username, password } = req.body;
 
     const user = await users.findOne({username}).lean();
+    if(user==null){
+        return res.json({data: "User not Found!"});
+    }
     //console.log(user._id);
     if(await bcrypt.compare(password, user.password))
     {//username password combination is success
@@ -54,6 +57,9 @@ router.get('/auth', async (req,res) => {
         
         return res.json({status: 'ok', data: token});
 
+    }
+    else{
+        return res.json({data: "User not Found!"});
     }
 });
 
