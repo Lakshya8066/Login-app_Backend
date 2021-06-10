@@ -41,7 +41,7 @@ router.post('/auth', async (req,res) => {
 
     const user = await users.findOne({username}).lean();
     if(user==null){
-        return res.json({data: "User not Found!"});
+        return res.json({success:false});
     }
     //console.log(user._id);
     if(await bcrypt.compare(password, user.password))
@@ -55,11 +55,11 @@ router.post('/auth', async (req,res) => {
         }, JWT_SECRET
         );
         
-        return res.json({status: 'ok', data: token});
+        return res.json({status: 'ok', data: token, success:true});
 
     }
     else{
-        return res.json({data: "User not Found!"});
+        return res.json({success:false});
     }
 });
 
